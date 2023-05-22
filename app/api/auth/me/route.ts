@@ -5,6 +5,9 @@ const prisma = new PrismaClient();
 
 export async function GET(req: Request) {
   const bearerToken = req.headers.get("authorization");
+  if (!bearerToken) {
+    return new Response(JSON.stringify("error"), { status: 401 });
+  }
   const token = bearerToken.split(" ")[1];
   const payload = jwt.decode(token) as { email: string };
 
