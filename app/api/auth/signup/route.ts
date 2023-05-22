@@ -2,7 +2,8 @@ import validator from "validator";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import * as jose from "jose";
-import { cookies } from "next/headers";
+
+import Cookies from "js-cookie";
 
 const prisma = new PrismaClient();
 export async function POST(req: Request) {
@@ -85,7 +86,7 @@ export async function POST(req: Request) {
     .setExpirationTime("24h")
     .sign(secret);
 
-  cookies().set("jwt", token);
+  Cookies.set("jwt", token);
 
   return new Response(
     JSON.stringify({
